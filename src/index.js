@@ -1,7 +1,14 @@
 const ethers = require("ethers");
 
 // Helpers
-const { error, success, decideFunction, info, trace } = require("./helpers");
+const {
+  error,
+  success,
+  decideFunction,
+  info,
+  trace,
+  isStableCoin,
+} = require("./helpers");
 
 // .env Configuration
 require("dotenv").config();
@@ -63,6 +70,12 @@ const init = async () => {
           // Checking if the result is empty
           if (result.length > 0) {
             const tokenAddress = result[1][1];
+
+            // Checking if the token address is stable coin
+            if (isStableCoin(tokenAddress)) {
+              error("Token Address", tokenAddress, "is stable coin!");
+              return;
+            }
           } else {
             console.log("Another transaction");
           }
