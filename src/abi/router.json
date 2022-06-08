@@ -1,0 +1,7 @@
+{
+    "abi": [
+        "function swapAVAXForExactTokens(uint256 amountOutMin, address[] path, address to, uint256 deadline)",
+        "function swapExactAVAXForTokens(uint amountOut, address[] calldata path, address to, uint deadline)",
+        "function swapExactAVAXForTokensSupportingFeeOnTransferTokens(uint amountOutMin,address[] calldata path,address to,uint deadline)"
+    ]
+}

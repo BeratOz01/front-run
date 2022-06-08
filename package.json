@@ -1,0 +1,26 @@
+{
+  "name": "front-run",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeratOz01/front-run.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeratOz01/front-run/issues"
+  },
+  "homepage": "https://github.com/BeratOz01/front-run#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^16.0.1",
+    "ethers": "^5.6.8",
+    "node-fetch": "^2.6.1"
+  }
+}
