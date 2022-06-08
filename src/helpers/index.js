@@ -1,6 +1,18 @@
 const chalk = require("chalk");
+const ethers = require("ethers");
 
 const log = console.log;
+
+// .env Configuration
+require("dotenv").config();
+
+// Constant
+const TraderJOERouterAddress = process.env.TraderJOERouterAddress;
+const TraderJOEFactoryAddress = process.env.TraderJOEFactoryAddress;
+const WAVAX = process.env.WAVAX;
+
+// Import INTERFACE for router contract of TraderJOE
+const { ABI } = require("../abi/router.json");
 
 // Constant array of stable coins addresses
 const stableCoins = [
@@ -60,10 +72,73 @@ const decideFunction = (interface, data) => {
   return result;
 };
 
-const calculateGas = (operation, amount) => {};
+const calculateGasPrice = (operation, gas, amount) => {
+  if (operation == "+") {
+    return Math.floor(parseInt(gas) + parseInt(amount));
+  } else {
+    return Math.floor(parseInt(gas) + parseInt(amount));
+  }
+};
 
 const isStableCoin = (address) => {
   return stableCoins.includes(String(address).toLowerCase());
 };
 
-module.exports = { error, success, info, trace, decideFunction, isStableCoin };
+const ROUTER = (account) => {
+  return new ethers.Contract(TraderJOERouterAddress, ABI, account);
+};
+
+const ERC20 = (address, account) => {
+  return new ethers.Contract(
+    address,
+    [
+      {
+        constant: true,
+        inputs: [{ name: "_owner", type: "address" }],
+        name: "balanceOf",
+        outputs: [{ name: "balance", type: "uint256" }],
+        payable: false,
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "decimals",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "symbol",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        constant: false,
+        inputs: [
+          { name: "_spender", type: "address" },
+          { name: "_value", type: "uint256" },
+        ],
+        name: "approve",
+        outputs: [{ name: "", type: "bool" }],
+        payable: false,
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+    ],
+    account
+  );
+};
+
+module.exports = {
+  error,
+  success,
+  info,
+  trace,
+  decideFunction,
+  isStableCoin,
+  calculateGasPrice,
+  ROUTER,
+  ERC20,
+};
